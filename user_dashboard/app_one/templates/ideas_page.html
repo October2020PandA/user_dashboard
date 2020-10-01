@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hi {{ user.first_name }}!</h1>
+    <h2>Post your Idea:</h2>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li {%if message.tags %} class="{{ message.tags }}" {% endif %}></li>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form action="/post_idea" method="POST">
+        {% csrf_token %}
+    <p><textarea name="idea">Post an Idea</textarea></p>
+
+    <p><input type="submit" value="Post your idea!"></p>
+    </form>
+
+    <div>
+    {% for idea in all_ideas %}
+    <p>{{ idea.user.created_at }}</p>
+    <p><a href="/user/{{ idea.user.id }}">{{ idea.user.first_name }}'s</a> Idea: {{ idea.idea }}</p>
+        {% if idea.user.id == user.id %}
+    <a href="/delete_idea/{{ idea.user.id }}">Delete Idea</a>
+        {% endif %}
+        {% for comment in all_comments %}
+        {% if idea.id == comment.wall_idea.id %}
+        <p>{{ comment.poster.first_name }} comments: {{ comment.comment }}</p>
+        {% endif %}
+        {% endfor %}
+    
+        <form action="/post_comment/{{ idea.id }}" method="POST">
+            {% csrf_token %}
+        <p><textarea name="comment">Post a comment</textarea></p>
+        <p><input type="submit" value="Post a comment"></p>
+        </form>
+
+    {% endfor %}
+    </div>
+        
+
+        <p><a href="/logout">Logout</a></p>
+        <p><a href="/dashboard">Return to dashboard</a></p>
+    
+</body>
+</html>

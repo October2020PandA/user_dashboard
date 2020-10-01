@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{ current_user.first_name }} {{ current_user.last_name }}</h1>
+    <h2>{{ current_user.email }}</h2>
+    <br>
+    <h2>Total number of Ideas: {{ current_user.ideas.count }}</h2>
+    <h2>Total number of Comments: {{ current_user.comments.count }}</h2>
+    
+    
+
+    <p><a href="/logout">Logout</a></p>
+    <p><a href="/ideas">See everyone's ideas!</a></p>
+    <p><a href="/dashboard">Return to Dashboard</a></p>
+</body>
+</html>

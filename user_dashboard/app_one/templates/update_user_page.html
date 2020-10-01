@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Update User</h1>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li {%if message.tags %} class="{{ message.tags }}" {% endif %}></li>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/update_user/{{user_update.id}}" method='POST'>
+    {% csrf_token %}
+    <p><label for=""></label></p>
+    <p><label for="first_name">First Name</label></p>
+        <p><input type="text" id="first_name" name="first_name"></p>
+
+        <p><label for="last_name">Last Name</label></p>
+        <p><input type="text" id="last_name" name="last_name"></p>
+
+        <p><label for="email">Email</label></p>
+        <p><input type="text" id="email" name="email"></p>
+
+        <p><input type="submit" value="Update"></p>
+    </form>
+</body>
+</html>
