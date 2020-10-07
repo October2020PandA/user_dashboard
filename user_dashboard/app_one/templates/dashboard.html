@@ -11,12 +11,10 @@
 <body>
     <div class="container">
     <h1>All Users</h1>
-    <a href="logout">Logout</a>
 
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Created at</th>
@@ -27,8 +25,7 @@
         <tbody>
             {% for user in all_users %}
             <tr class='info'>
-                <td>{{ user.id }}</td>
-                <td><a href="">{{ user.first_name }} {{ user.last_name }}</a></td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.created_at }}</td>
                 <td><a href="/user/{{ user.id }}">See this person's ideas!</a></td>
@@ -38,6 +35,9 @@
     </table>
 
     <h3><a href="/ideas" class="btn btn-primary btn-lg btn-block">See all wonderful ideas!</a></h3>
+
+    <hr>
+    <a href="logout" class="btn btn-danger">Logout</a>
 
     
     </div>

@@ -7,6 +7,9 @@ from django.contrib import messages
 def index(request):
     return render(request, 'index.html')
 
+def admin_page(request):
+    return render(request, '/admin')
+
 def register_user(request):
     if request.method == 'POST':
         password = request.POST['password']
@@ -27,6 +30,7 @@ def register_user(request):
             current_user.user_level = 9
             current_user.save()
         request.session['current_user'] = current_user.first_name
+        request.session['success'] = "Successful Registration, log in!"
             
     return redirect('/')
 
@@ -126,7 +130,7 @@ def ideas_page(request):
     context = {
         'user': User.objects.get(id=request.session['user_id']),
         'all_users': User.objects.all(),
-        'all_ideas': Idea.objects.all(),
+        'all_ideas': Idea.objects.all().order_by('-created_at'),
         'all_comments': Comment.objects.all() 
     }
     return render(request, 'ideas_page.html', context)
@@ -145,13 +149,24 @@ def post_idea(request):
             idea = request.POST['idea'],
             user = this_user
         )
+        context = {
+            'user': User.objects.get(id=request.session['user_id']),
+            'all_users': User.objects.all(),
+            'all_ideas': Idea.objects.all().order_by('-created_at'),
+            'all_comments': Comment.objects.all() 
+        }
+        
+        return render(request,'idea_list.html', context)
     return redirect('/ideas')
 
 def delete_idea(request,iid):
-    if 'user_id' not in request.session:
-        delete_idea = Idea.objects.get(id=iid)
-        delete_idea.delete()
+    delete_idea = Idea.objects.get(id=iid)
+    delete_idea.delete()
     return redirect('/ideas')
+
+    
+    
+    
 
 def post_comment(request, iid):
     if request.method == 'POST':
