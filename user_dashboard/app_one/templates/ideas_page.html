@@ -25,7 +25,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/dashboard" id="dashboard" class="btn btn-info">Return to dashboard</a></li>
             <li><a href="/logout" class="btn btn-danger">Logout</a></li>
-            <li><button class='move_button'>Move</button></li>
+            <!-- <li><button class='move_button'>Move</button></li> -->
         </ul>
             
         {% if messages %}
@@ -58,9 +58,9 @@
             {% endif %}
             </div>
 
-            <div class='media-body'>  
+            <div class='media-body'>
                 {% for comment in all_comments %}
-                
+
                     {% if idea.id == comment.wall_idea.id %}
                     <h4 class='media-heading'>{{ comment.poster.first_name }} comments:</h4>
                     <img src="{% static 'images/img_avatar2.png' %}">
@@ -87,34 +87,34 @@
 </body>
 
   
-  <script>
-      function moveDown() {
-          $(document).on('click', '.move_button', function() {
-              console.log('Trying to move')
-            $('#idea-div').animate({'marginTop': '+=260px'})
+<script>
+    function moveDown() {
+        $(document).on('click', '.move_button', function() {
+            console.log('Trying to move')
+          $('#idea-div').animate({'marginTop': '+=260px'})
 
+        })
+
+    }
+
+      $('.newidea').submit(function(e){
+          e.preventDefault()
+          $.ajax({
+              url: '/post_idea',
+              method: 'post',
+              data: $(this).serialize(),
+              success: function(serverResponse) {
+                  // $('idea-div').animate({'marginTop': '+=260px'})
+                  $('#idea_div').html(serverResponse)
+
+              }
           })
-        
-      }
+      });
 
-        $('.newidea').submit(function(e){
-            e.preventDefault()
-            $.ajax({
-                url: '/post_idea',
-                method: 'post',
-                data: $(this).serialize(),
-                success: function(serverResponse) {
-                    // $('idea-div').animate({'marginTop': '+=260px'})
-                    $('#idea_div').html(serverResponse)
-                            
-                }
-            })
-        });
+                          // console.log('This Works')
+                          // $('#idea_animation').slideDown('slow')
 
-                            // console.log('This Works')
-                            // $('#idea_animation').slideDown('slow')
-  
-  </script>
+</script>
 
 
 </html>
